@@ -31,7 +31,7 @@ public class Cell {
         neighbors.add(cell);
     }
 
-    void countLiveNeighbors(){
+    protected void countLiveNeighbors(){
         int count=0;
         for(Cell cell:neighbors){
             if(cell.isAlive()){

@@ -21,16 +21,18 @@ public class GameCore {
         createCells();
         setNeighborhood();
         display();
+        checkTheEnd();
     }
 
     public void nextTurn() {
         countNeighborsForEveryCell();
         convertEveryCell();
         display();
+        checkTheEnd();
     }
 
-    public Cell[][] getBoard() {
-        return board;
+    public boolean isRun() {
+        return run;
     }
 
     public void display() {
@@ -92,6 +94,22 @@ public class GameCore {
             for (int y = 0; y < ySize; y++) {
                 board[x][y].convert();
             }
+        }
+    }
+    private int countAliveCells() {
+        int count=0;
+        for (int x = 0; x < xSize; x++) {
+            for (int y = 0; y < ySize; y++) {
+                if(board[x][y].isAlive()){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    private void checkTheEnd(){
+        if(countAliveCells()==0){
+            run=false;
         }
     }
 
