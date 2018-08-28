@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Cell {
     private boolean alive;
-    private List<Cell> neighbors=new ArrayList<>();
+    private List<Cell> neighbors = new ArrayList<>();
     private int aliveNeighbors;
 
 
@@ -13,42 +13,43 @@ public class Cell {
         this.alive = alive;
     }
 
-    public int getAliveNeighbors() {
+    int getAliveNeighbors() {
         return aliveNeighbors;
     }
 
-    public boolean isAlive() {
+    boolean isAlive() {
         return alive;
     }
 
-    public void addNeighbor(Cell cell){
-        if(neighbors.size()>=4){
+    void addNeighbor(Cell cell) {
+        if (neighbors.size() >= 4) {
             throw new IndexOutOfBoundsException();
         }
-        if(cell==null){
+        if (cell == null) {
             throw new NullPointerException();
         }
         neighbors.add(cell);
     }
 
-    protected void countLiveNeighbors(){
-        int count=0;
-        for(Cell cell:neighbors){
-            if(cell.isAlive()){
+    void countLiveNeighbors() {
+        int count = 0;
+        for (Cell cell : neighbors) {
+            if (cell.isAlive()) {
                 count++;
             }
         }
-        aliveNeighbors=count;
+        aliveNeighbors = count;
     }
-    public void convert(){
-        if(alive&&aliveNeighbors<2){
-            alive=false;
+
+    void convert() {
+        if (alive && aliveNeighbors < 2) {
+            alive = false;
         }
-        if(alive&&aliveNeighbors>3){
-            alive=false;
+        if (alive && aliveNeighbors > 3) {
+            alive = false;
         }
-        if(!alive &&aliveNeighbors==3){
-            alive=true;
+        if (!alive && aliveNeighbors == 3) {
+            alive = true;
         }
     }
 

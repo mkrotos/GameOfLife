@@ -3,21 +3,21 @@ package com.krotos;
 import java.util.Random;
 
 public class GameCore {
-    private int xSize;
     private int ySize;
-    private boolean run;
+    private int xSize;
+    private boolean notEnded;
     private Random random = new Random();
     private Cell[][] board;
 
-    public GameCore(int xSize, int ySize) {
-        this.xSize = xSize;
+    public GameCore(int ySize, int xSize) {
         this.ySize = ySize;
-        run = false;
-        board = new Cell[xSize][ySize];
+        this.xSize = xSize;
+        notEnded = false;
+        board = new Cell[ySize][xSize];
     }
 
     public void start() {
-        run = true;
+        notEnded = true;
         createCells();
         setNeighborhood();
         display();
@@ -31,13 +31,13 @@ public class GameCore {
         checkTheEnd();
     }
 
-    public boolean isRun() {
-        return run;
+    public boolean isNotEnded() {
+        return notEnded;
     }
 
-    public void display() {
-        for (int x = 0; x < xSize; x++) {
-            for (int y = 0; y < ySize; y++) {
+    private void display() {
+        for (int x = 0; x < ySize; x++) {
+            for (int y = 0; y < xSize; y++) {
                 System.out.print(dispAlive(board[x][y]) + " ");
             }
             System.out.println();
@@ -54,26 +54,26 @@ public class GameCore {
     }
 
     private void createCells() {
-        for (int x = 0; x < xSize; x++) {
-            for (int y = 0; y < ySize; y++) {
+        for (int x = 0; x < ySize; x++) {
+            for (int y = 0; y < xSize; y++) {
                 board[x][y] = new Cell(random.nextBoolean());
             }
         }
     }
 
     private void setNeighborhood() {
-        for (int x = 0; x < xSize; x++) {
-            for (int y = 0; y < ySize; y++) {
+        for (int x = 0; x < ySize; x++) {
+            for (int y = 0; y < xSize; y++) {
                 if (x > 0) {
                     board[x][y].addNeighbor(board[x - 1][y]);
                 }
                 if (y > 0) {
                     board[x][y].addNeighbor(board[x][y - 1]);
                 }
-                if (x < xSize - 1) {
+                if (x < this.ySize - 1) {
                     board[x][y].addNeighbor(board[x + 1][y]);
                 }
-                if (y < ySize - 1) {
+                if (y < xSize - 1) {
                     board[x][y].addNeighbor(board[x][y + 1]);
                 }
 
@@ -82,34 +82,36 @@ public class GameCore {
     }
 
     private void countNeighborsForEveryCell() {
-        for (int x = 0; x < xSize; x++) {
-            for (int y = 0; y < ySize; y++) {
+        for (int x = 0; x < ySize; x++) {
+            for (int y = 0; y < xSize; y++) {
                 board[x][y].countLiveNeighbors();
             }
         }
     }
 
     private void convertEveryCell() {
-        for (int x = 0; x < xSize; x++) {
-            for (int y = 0; y < ySize; y++) {
+        for (int x = 0; x < ySize; x++) {
+            for (int y = 0; y < xSize; y++) {
                 board[x][y].convert();
             }
         }
     }
+
     private int countAliveCells() {
-        int count=0;
-        for (int x = 0; x < xSize; x++) {
-            for (int y = 0; y < ySize; y++) {
-                if(board[x][y].isAlive()){
+        int count = 0;
+        for (int x = 0; x < ySize; x++) {
+            for (int y = 0; y < xSize; y++) {
+                if (board[x][y].isAlive()) {
                     count++;
                 }
             }
         }
         return count;
     }
-    private void checkTheEnd(){
-        if(countAliveCells()==0){
-            run=false;
+
+    private void checkTheEnd() {
+        if (countAliveCells() == 0) {
+            notEnded = false;
         }
     }
 
