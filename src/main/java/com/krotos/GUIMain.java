@@ -1,10 +1,10 @@
 package com.krotos;
 
-import com.krotos.gui.controler.HomePageControler;
+import com.krotos.gui.controler.HomePageController;
 
 public class GUIMain {
     public static void main(String[] args) {
-        HomePageControler homePageControler=new HomePageControler();
-        homePageControler.show();
+        HomePageController homePageController =new HomePageController();
+        homePageController.show();
     }
 }
